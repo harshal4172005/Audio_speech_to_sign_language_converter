@@ -1,0 +1,53 @@
+def bit_stuffing(data):
+    stuffed_data = ''
+    count = 0
+    
+    # Traverse the data
+    for bit in data:
+        if bit == '1':
+            count += 1
+        else:
+            count = 0
+        
+        # Append the bit to the stuffed data
+        stuffed_data += bit
+        
+        # If five consecutive 1's are detected, stuff a 0
+        if count == 5:
+            stuffed_data += '0'
+            count = 0
+    
+    return stuffed_data
+
+def bit_destuffing(stuffed_data):
+    destuffed_data = ''
+    count = 0
+    
+    # Traverse the stuffed data
+    for bit in stuffed_data:
+        if bit == '1':
+            count += 1
+        else:
+            count = 0
+        
+        # Append the bit unless it's a stuffed '0'
+        destuffed_data += bit
+        
+        # If five consecutive 1's are detected, skip the next bit if it's a 0
+        if count == 5:
+            count = 0  # Reset count
+            continue  # Skip the stuffed 0
+    
+    return destuffed_data
+
+# Example usage
+data = '01111110111111011111101111'  # Example data with multiple 1s
+
+# Perform bit stuffing
+stuffed_data = bit_stuffing(data)
+print(f"Original Data: {data}")
+print(f"Stuffed Data: {stuffed_data}")
+
+# Perform bit destuffing
+destuffed_data = bit_destuffing(stuffed_data)
+print(f"Destuffed Data: {destuffed_data}")
